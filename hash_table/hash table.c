@@ -20,3 +20,38 @@ unsigned int hash(const char* key){
       
     return total;
 }
+HashTable_t* create(){
+    HashTable_t *hash_table= (HashTable_t*)malloc(sizeof(HashTable_t));
+    return hash_table;
+
+}
+bool add( HashTable_t * table, const char* key, int value){
+    Binding_t *binding_ptr = (Binding_t*)malloc(sizeof(Binding_t));
+    binding_ptr->key=key;
+    binding_ptr->value=value;
+    binding_ptr->next=NULL;
+    int hash_value =hash(key);
+    if(table->buckets[hash_value]==NULL){
+         table->buckets[hash_value]=binding_ptr;
+         return true;
+    }else{
+        Binding_t * temp=table->buckets[hash_value];
+        if(temp->key==key){
+            temp=binding_ptr;
+            return false;
+        }else{
+            while ( temp->next!=NULL )
+            {
+                temp=temp->next;
+                if(temp->key==key){
+                    temp=binding_ptr;
+                    return false;
+                }
+            }
+            temp->next=binding_ptr;
+            return true;
+        }
+      
+    }
+  
+}
