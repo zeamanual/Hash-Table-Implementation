@@ -55,3 +55,42 @@ bool add( HashTable_t * table, const char* key, int value){
     }
   
 }
+void delete_table( HashTable_t* table){
+    for (int i = 0;i < BUCKET_COUNT;i++){
+        free(table->buckets[i]);
+        table->buckets[i]=NULL;
+    }
+    free(table);
+
+}
+bool remove( HashTable_t* table, const char* key){
+    int hash_value = hash(key);
+    if(table->buckets[hash_value]!=NULL){
+        if(table->buckets[hash_value]->key==key){
+            free(table->buckets[hash_value]);
+            table->buckets[hash_value]=NULL;
+            return true;
+        }
+        else if(table->buckets[hash_value]->next!=NULL){
+            Binding_t *prvevious =(Binding_t*) malloc(sizeof(Binding_t));
+            Binding_t *temp = table->buckets[hash_value]->next;
+            while (temp!=NULL)
+            {
+                if((temp->key)==key){
+                    prvevious->next=temp->next;
+                    free(temp);
+                    return true;
+                }else{
+                    prvevious=temp;
+                    temp = temp->next;
+                }  
+            }
+            return false;   
+        }
+    }else{
+        return false;
+    }
+
+
+
+}
