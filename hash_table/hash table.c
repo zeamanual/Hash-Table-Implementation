@@ -94,3 +94,25 @@ bool remove( HashTable_t* table, const char* key){
 
 
 }
+Binding_t* find(HashTable_t* table, const char* key){
+   int hash_value = hash(key);
+   if(table->buckets[hash_value]!=NULL){
+       if(table->buckets[hash_value]->key==key){
+           return table->buckets[hash_value];
+       }
+       else if(table->buckets[hash_value]->next!=NULL){
+           Binding_t *temp = table->buckets[hash_value]->next;
+           while (temp!=NULL)
+           {
+            if((temp->key)==key){
+                return temp;
+            }else{
+                temp = temp->next;
+            }  
+           }
+           return NULL;   
+       }
+   }else{
+       return NULL;
+   }
+}
