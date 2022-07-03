@@ -50,10 +50,8 @@ bool add( HashTable_t * table, const char* key, int value){
             }
             temp->next=binding_ptr;
             return true;
-        }
-      
-    }
-  
+        } 
+    } 
 }
 void delete_table( HashTable_t* table){
     for (int i = 0;i < BUCKET_COUNT;i++){
@@ -61,7 +59,6 @@ void delete_table( HashTable_t* table){
         table->buckets[i]=NULL;
     }
     free(table);
-
 }
 bool remove( HashTable_t* table, const char* key){
     int hash_value = hash(key);
@@ -90,9 +87,6 @@ bool remove( HashTable_t* table, const char* key){
     }else{
         return false;
     }
-
-
-
 }
 Binding_t* find(HashTable_t* table, const char* key){
    int hash_value = hash(key);
